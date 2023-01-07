@@ -431,6 +431,7 @@ MonoBehaviour:
   deceleration: 0.05
   rb: {fileID: 456776807}
   inConversation: 0
+  canStartConversation: 0
   lastCollision: {fileID: 0}
   dialogueManager: {fileID: 1312714649}
 --- !u!212 &456776809

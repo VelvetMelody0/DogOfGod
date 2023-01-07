@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: DialogueName
   <Text>k__BackingField: Dialogue text.
-  <Choices>k__BackingField: []
-  <DialogueType>k__BackingField: 0
-  <IsStartingDialogue>k__BackingField: 1
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: New Choice
+    <NextDialogue>k__BackingField: {fileID: 0}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0

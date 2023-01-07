@@ -13,6 +13,7 @@ namespace DialogueSystem.Utilities
     using Elements;
     using ScriptableObjects;
     using System.Linq;
+    using UnityEditor.Experimental.GraphView;
     using Windows;
     public class DialogueSystemIOUtility
     {
@@ -26,6 +27,9 @@ namespace DialogueSystem.Utilities
         private static Dictionary<string, DialogueSystemDialogueGroupSO> createdDialogueGroups;
         private static Dictionary<string, DialogueSystemDialogueSO> createdDialogues;
 
+        private static Dictionary<string, DialogueSystemGroup> loadedGroups;
+        private static Dictionary<string, DialogueSystemNode> loadedNodes;
+
         public static void Initialize(DialogueSystemGraphView dialogueSystemGraphView, string graphName)
         {
             graphView = dialogueSystemGraphView;
@@ -37,6 +41,9 @@ namespace DialogueSystem.Utilities
 
             createdDialogueGroups = new Dictionary<string, DialogueSystemDialogueGroupSO>();
             createdDialogues = new Dictionary<string, DialogueSystemDialogueSO>();
+
+            loadedGroups = new Dictionary<string, DialogueSystemGroup>();
+            loadedNodes = new Dictionary<string, DialogueSystemNode>();
         }
         #region Save Methods
         public static void Save()
@@ -159,18 +166,8 @@ namespace DialogueSystem.Utilities
 
         private static void SaveNodeToGraph(DialogueSystemNode node, DialogueSystemGraphSaveDataSO graphData)
         {
-            List<DialogueSystemChoiceSaveData> choices = new List<DialogueSystemChoiceSaveData>();
-            foreach (DialogueSystemChoiceSaveData choice in node.Choices)
-            {
-                DialogueSystemChoiceSaveData choiceData = new DialogueSystemChoiceSaveData()
-                {
-                    Text = choice.Text,
-                    NodeID = choice.NodeID
-                };
-                
+            List<DialogueSystemChoiceSaveData> choices = CloneNodeChoices(node.Choices);
 
-                choices.Add(choiceData);
-            };
             DialogueSystemNodeSaveData nodeData = new DialogueSystemNodeSaveData()
             {
                 ID = node.ID,
@@ -225,6 +222,9 @@ namespace DialogueSystem.Utilities
                 {
                     Text = nodeChoice.Text
                 };
+                //missed adding dialogueChoices.Add(choiceData);
+                dialogueChoices.Add(choiceData);
+
             }
             return dialogueChoices;
         }
@@ -243,16 +243,8 @@ namespace DialogueSystem.Utilities
                     {
                         continue;
                     }
-                    Debug.Log("choice index = " + choiceIndex);
-                    //Debug.Log("node.Choices.count = " + node.Choices.Count);
-                    Debug.Log("Dialogue choices.count =" + dialogue.Choices.Count);
-                    Debug.Log(nodeChoice.NodeID.ToString());
-                    //for some reason, dialogue.Choices.Count is == 0 in my script, while it is 1 in your script. I must be missing a place
-                    // where we incrimented it somewhere else? any ideas?
                     dialogue.Choices[choiceIndex].NextDialogue = createdDialogues[nodeChoice.NodeID];
-                    Debug.Log("test0");
                     SaveAsset(dialogue);
-                    //and this is my script =(
                 }
             }
         }
@@ -294,10 +286,104 @@ namespace DialogueSystem.Utilities
             graphData.OldUngroupedNodeNames = new List<string>(currentUngroupedNodeNames);
         }
 
-        
+
 
         #endregion
 
+        #region Load Methods
+        public static void Load()
+        {
+            DialogueSystemGraphSaveDataSO graphData = LoadAsset<DialogueSystemGraphSaveDataSO>("Assets/Editor/DialogueSystem/Graphs", graphFileName);
+        
+            if(graphData == null)
+            {
+                EditorUtility.DisplayDialog(
+                    "Couldn't load the file!",
+                    "The file at the following path could not be found:\n\n" +
+                    $"Assets/Editor/DialogueSystem/Graphs/{graphFileName}\n\n" +
+                    "Make sure you chose the right file and it is placed at the folder path mentioned above.",
+                    "Thanks!"
+                    );
+                return;
+            }
+
+            DialogueSystemEditorWindow.UpdateFileName(graphData.FileName);
+
+            LoadGroups(graphData.Groups);
+            LoadNodes(graphData.Nodes);
+            LoadNodesConnections();
+        }
+
+        private static void LoadGroups(List<DialogueSystemGroupSaveData> groups)
+        {
+            foreach(DialogueSystemGroupSaveData groupData in groups)
+            {
+                DialogueSystemGroup group = graphView.CreateGroup(groupData.Name, groupData.Position);
+
+                group.ID = groupData.ID;
+
+                loadedGroups.Add(group.ID, group);
+            }
+        }
+
+        private static void LoadNodes(List<DialogueSystemNodeSaveData> nodes)
+        {
+            foreach(DialogueSystemNodeSaveData nodeData in nodes)
+            {
+                List<DialogueSystemChoiceSaveData> choices = CloneNodeChoices(nodeData.Choices);
+
+                DialogueSystemNode node = graphView.CreateNode(nodeData.Name, nodeData.DialogueType, nodeData.Position, false);
+
+                node.ID = nodeData.ID;
+                node.Choices = choices;
+                node.Text=nodeData.Text;
+
+                node.Draw();
+
+                graphView.AddElement(node);
+
+                loadedNodes.Add(node.ID, node);
+
+                if(string.IsNullOrEmpty(nodeData.GroupID))
+                {
+                    continue;
+                }
+
+                DialogueSystemGroup group = loadedGroups[nodeData.GroupID];
+
+                node.Group = group;
+
+                group.AddElement(node);
+            }
+        }
+
+        private static void LoadNodesConnections()
+        {
+            foreach(KeyValuePair<string, DialogueSystemNode> loadedNode in loadedNodes)
+            {
+                foreach (Port choicePort in loadedNode.Value.outputContainer.Children())
+                {
+                    DialogueSystemChoiceSaveData choiceData = (DialogueSystemChoiceSaveData) choicePort.userData;
+
+                    if(string.IsNullOrEmpty(choiceData.NodeID))
+                    {
+                        continue;
+                    }
+
+                    DialogueSystemNode nextNode = loadedNodes[choiceData.NodeID];
+
+                    Port nextNodeInputPort = (Port) nextNode.inputContainer.Children().First();
+
+                    Edge edge =choicePort.ConnectTo(nextNodeInputPort);
+
+                    graphView.AddElement(edge);
+
+                    loadedNode.Value.RefreshPorts();
+                }
+            }
+        }
+
+        #endregion
         #region Creation Methods
         private static void CreateStaticFolder()
         {
@@ -354,15 +440,22 @@ namespace DialogueSystem.Utilities
         {
             string fullPath = $"{path}/{assetName}.asset";
 
-            T asset = AssetDatabase.LoadAssetAtPath<T>(fullPath);
+            T asset = LoadAsset<T>(path, assetName);
 
-            if(asset == null)
+            if (asset == null)
             {
                 asset = ScriptableObject.CreateInstance<T>();
 
                 AssetDatabase.CreateAsset(asset, fullPath);
             }
             return asset;
+        }
+
+        private static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+
+            return AssetDatabase.LoadAssetAtPath<T>(fullPath);
         }
 
         private static void RemoveAsset(string path, string assetName)
@@ -376,6 +469,24 @@ namespace DialogueSystem.Utilities
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+        }
+
+        private static List<DialogueSystemChoiceSaveData> CloneNodeChoices(List<DialogueSystemChoiceSaveData> nodeChoices)
+        {
+            List<DialogueSystemChoiceSaveData> choices = new List<DialogueSystemChoiceSaveData>();
+            foreach (DialogueSystemChoiceSaveData choice in nodeChoices)
+            {
+                DialogueSystemChoiceSaveData choiceData = new DialogueSystemChoiceSaveData()
+                {
+                    Text = choice.Text,
+                    NodeID = choice.NodeID
+                };
+
+
+                choices.Add(choiceData);
+            }
+
+            return choices;
         }
 
         #endregion

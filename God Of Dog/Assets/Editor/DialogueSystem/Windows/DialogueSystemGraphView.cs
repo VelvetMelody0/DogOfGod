@@ -132,7 +132,7 @@ namespace DialogueSystem.Windows
         private IManipulator CreateNodeContexualMenu(string actionTitle, DialogueSystemDialogueType dialogueType)
         {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode(dialogueType, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
+                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => AddElement(CreateNode("DialogueName", dialogueType, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
                 );
 
 
@@ -164,15 +164,18 @@ namespace DialogueSystem.Windows
 
         
 
-        public DialogueSystemNode CreateNode(DialogueSystemDialogueType dialogueType, Vector2 position)
+        public DialogueSystemNode CreateNode(string nodeName, DialogueSystemDialogueType dialogueType, Vector2 position, bool shouldDraw = true)
         {
 
             Type nodeType = Type.GetType($"DialogueSystem.Elements.DialogueSystem{dialogueType}Node");
             DialogueSystemNode node = (DialogueSystemNode)Activator.CreateInstance(nodeType);
 
-            node.Initialize(this, position);
-            node.Draw();
-
+            node.Initialize(nodeName, this, position);
+            if(shouldDraw)
+            {
+                node.Draw();
+            }
+            
             AddUngroupedNode(node);
 
             return node;
@@ -191,31 +194,31 @@ namespace DialogueSystem.Windows
                 List<DialogueSystemGroup> groupsToDelete = new List<DialogueSystemGroup>();
                 List<UnityEditor.Experimental.GraphView.Edge> edgesToDelete = new List<UnityEditor.Experimental.GraphView.Edge>();
                 List<DialogueSystemNode> nodesToDelete = new List<DialogueSystemNode>();
-                foreach(GraphElement element in selection)
+                foreach(GraphElement selectedElement in selection)
                 {
-                    if(element is DialogueSystemNode node)
+                    if(selectedElement is DialogueSystemNode node)
                     {
                         nodesToDelete.Add(node);
 
                         continue;
                     }
 
-                    if(element.GetType() == edgeType)
+                    if(selectedElement.GetType() == edgeType)
                     {
-                        UnityEditor.Experimental.GraphView.Edge edge = (UnityEditor.Experimental.GraphView.Edge)element;
+                        UnityEditor.Experimental.GraphView.Edge edge = (UnityEditor.Experimental.GraphView.Edge)selectedElement;
 
                         edgesToDelete.Add(edge);
 
                         continue;
                     }    
 
-                    if(element.GetType() != groupType)
+                    if(selectedElement.GetType() != groupType)
                     {
                         continue;
                     }
-                    DialogueSystemGroup group = (DialogueSystemGroup) element;
+                    DialogueSystemGroup group = (DialogueSystemGroup) selectedElement;
                     
-
+                    //HERE
                     groupsToDelete.Add(group);
 
                 }
@@ -355,12 +358,14 @@ namespace DialogueSystem.Windows
                     {
                         if(element.GetType() != edgeType)
                         {
-                            UnityEditor.Experimental.GraphView.Edge edge = (UnityEditor.Experimental.GraphView.Edge) element;
-
-                            DialogueSystemChoiceSaveData choiceData = (DialogueSystemChoiceSaveData) edge.output.userData;
-
-                            choiceData.NodeID = "";
+                            continue;
                         }
+                        
+                        UnityEditor.Experimental.GraphView.Edge edge = (UnityEditor.Experimental.GraphView.Edge)element;
+
+                        DialogueSystemChoiceSaveData choiceData = (DialogueSystemChoiceSaveData)edge.output.userData;
+
+                        choiceData.NodeID = "";
                     }
                 }
 
@@ -591,6 +596,17 @@ namespace DialogueSystem.Windows
             Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
 
             return localMousePosition;
+        }
+
+        public void ClearGraph()
+        {
+            graphElements.ForEach(graphElement => RemoveElement(graphElement));
+
+            groups.Clear();
+            groupedNodes.Clear();
+            ungroupedNodes.Clear();
+
+            NameErrorsAmount= 0;
         }
         #endregion
     }

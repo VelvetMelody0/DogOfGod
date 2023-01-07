@@ -15,9 +15,9 @@ namespace DialogueSystem.Elements
     {
 
 
-        public override void Initialize(DialogueSystemGraphView dialogueSystemGraphView, Vector2 position)
+        public override void Initialize(string nodeName, DialogueSystemGraphView dialogueSystemGraphView, Vector2 position)
         {
-            base.Initialize(dialogueSystemGraphView, position);
+            base.Initialize(nodeName, dialogueSystemGraphView, position);
 
             DialogueType = DialogueSystemDialogueType.MultipleChoice;
 
@@ -73,7 +73,7 @@ namespace DialogueSystem.Elements
 
             DialogueSystemChoiceSaveData choiceData = (DialogueSystemChoiceSaveData) userData;
 
-            choicePort.portName = "";
+            //HELP choicePort.portName = "";
 
             Button deleteChoiceButton = DialogueSystemElementUtility.CreateButton("X", () =>
             {
@@ -107,6 +107,7 @@ namespace DialogueSystem.Elements
 
             choicePort.Add(choiceTextField);
             choicePort.Add(deleteChoiceButton);
+
             return choicePort;
         }
         #endregion

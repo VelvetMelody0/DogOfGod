@@ -28,10 +28,10 @@ namespace DialogueSystem.Elements
 
         private Color defaultBackgroundColor;
 
-        public virtual void Initialize(DialogueSystemGraphView dialogueSystemGraphView, Vector2 position)
+        public virtual void Initialize(string nodeName, DialogueSystemGraphView dialogueSystemGraphView, Vector2 position)
         {
             ID = Guid.NewGuid().ToString();
-            DialogueName = "DialogueName";
+            DialogueName = nodeName;
             Choices = new List<DialogueSystemChoiceSaveData>();
             Text = "Dialogue text.";
 

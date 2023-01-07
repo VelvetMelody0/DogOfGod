@@ -54,14 +54,14 @@ namespace DialogueSystem.Windows
             {
                     case DialogueSystemDialogueType.SingleChoice:
                     {
-                            DialogueSystemSingleChoiceNode singleChoiceNode = (DialogueSystemSingleChoiceNode) graphView.CreateNode(DialogueSystemDialogueType.SingleChoice, localMousePosition);
+                            DialogueSystemSingleChoiceNode singleChoiceNode = (DialogueSystemSingleChoiceNode) graphView.CreateNode("DialogueName", DialogueSystemDialogueType.SingleChoice, localMousePosition);
                         
                             graphView.AddElement(singleChoiceNode);
                             return true;
                     }
                     case DialogueSystemDialogueType.MultipleChoice:
                     {
-                            DialogueSystemMultipleChoiceNode multipleChoiceNode = (DialogueSystemMultipleChoiceNode)graphView.CreateNode(DialogueSystemDialogueType.MultipleChoice, localMousePosition);
+                            DialogueSystemMultipleChoiceNode multipleChoiceNode = (DialogueSystemMultipleChoiceNode)graphView.CreateNode("DialogueName", DialogueSystemDialogueType.MultipleChoice, localMousePosition);
 
                             graphView.AddElement(multipleChoiceNode);
                             return true;

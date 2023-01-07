@@ -16,20 +16,46 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 3c99165e-0b4a-41b0-9265-010dfd7f6113
     <Name>k__BackingField: DialogueGroup
-    <Position>k__BackingField: {x: 503, y: 195}
+    <Position>k__BackingField: {x: 450, y: -83.50001}
   <Nodes>k__BackingField:
   - <ID>k__BackingField: 90c6ad37-28f1-4827-a9b1-f6d281c11616
     <Name>k__BackingField: d
     <Text>k__BackingField: Dialogue text.
     <Choices>k__BackingField:
     - <Text>k__BackingField: New Choice
-      <NodeID>k__BackingField: 
+      <NodeID>k__BackingField: cb2c000b-c46f-4748-ad5b-ef326e746547
     <GroupID>k__BackingField: 3c99165e-0b4a-41b0-9265-010dfd7f6113
     <DialogueType>k__BackingField: 1
-    <Position>k__BackingField: {x: 528, y: 253.5}
+    <Position>k__BackingField: {x: 475, y: -25}
+  - <ID>k__BackingField: d21dbbfc-d4e4-43e5-a49b-c13e4d1a84d8
+    <Name>k__BackingField: DialogueName
+    <Text>k__BackingField: Dialogue text.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: 90c6ad37-28f1-4827-a9b1-f6d281c11616
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: 
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: 
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: 90c6ad37-28f1-4827-a9b1-f6d281c11616
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: -210.5, y: 190.5}
+  - <ID>k__BackingField: cb2c000b-c46f-4748-ad5b-ef326e746547
+    <Name>k__BackingField: sdf
+    <Text>k__BackingField: Hello World
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: New Choice
+      <NodeID>k__BackingField: d21dbbfc-d4e4-43e5-a49b-c13e4d1a84d8
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1056, y: 243}
   <OldGroupNames>k__BackingField:
   - DialogueGroup
-  <OldUngroupedNodeNames>k__BackingField: []
+  <OldUngroupedNodeNames>k__BackingField:
+  - DialogueName
+  - sdf
   <OldGroupedNodeNames>k__BackingField:
     list:
     - Key: DialogueGroup
