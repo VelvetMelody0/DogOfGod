@@ -15,6 +15,7 @@ namespace DialogueSystem.Windows
         private readonly string defaultFileName = "DialoguesFileName";
         private static TextField fileNameTextField;
         private Button saveButton;
+        private Button miniMapButton;
         [MenuItem("Window/DialogueSystem/Dialogue Graph")]
         public static void Open()
         {
@@ -56,16 +57,19 @@ namespace DialogueSystem.Windows
             Button clearButton = DialogueSystemElementUtility.CreateButton("Clear", () => Clear());
             Button resetButton = DialogueSystemElementUtility.CreateButton("Reset", () => ResetGraph());
 
+            miniMapButton = DialogueSystemElementUtility.CreateButton("Minimap", () => ToggleMiniMap());
+
             toolbar.Add(fileNameTextField);
             toolbar.Add(saveButton);
             toolbar.Add(loadButton);
             toolbar.Add(clearButton);
             toolbar.Add(resetButton);
+            toolbar.Add(miniMapButton);
 
             toolbar.AddStyleSheets("DialogueSystem/DialogueSystemToolbarStyles.uss");
 
             rootVisualElement.Add(toolbar);
-        } 
+        }
 
         private void AddStyles()
         {
@@ -115,6 +119,12 @@ namespace DialogueSystem.Windows
             UpdateFileName(defaultFileName);
         }
 
+        private void ToggleMiniMap()
+        {
+            graphView.ToggleMiniMap();
+
+            miniMapButton.ToggleInClassList("ds-toolbar__button__selected");
+        }
 
         #endregion
 

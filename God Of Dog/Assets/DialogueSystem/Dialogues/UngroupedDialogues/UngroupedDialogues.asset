@@ -10,14 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9f7201a55c10be45a2359d15259e907, type: 3}
-  m_Name: DialoguesFileName
+  m_Name: UngroupedDialogues
   m_EditorClassIdentifier: 
-  <FileName>k__BackingField: DialoguesFileName
+  <FileName>k__BackingField: UngroupedDialogues
   <DialogueGroups>k__BackingField:
-    list:
-    - Key: {fileID: 11400000, guid: 92673842d0fb36c4380bcf3ec7a93a3a, type: 2}
-      Value:
-      - {fileID: 11400000, guid: 2cd87d603dfc95a4c93b1961a44f0721, type: 2}
+    list: []
   <UngroundedDialogues>k__BackingField:
-  - {fileID: 11400000, guid: b1fbf8ea163fb184ca64a51a3ec43c54, type: 2}
-  - {fileID: 11400000, guid: 7f9c883ebc79f6045bf63056613cd7cf, type: 2}
+  - {fileID: 11400000, guid: d6c8de28719919c4eab3674ddf2c602b, type: 2}
+  - {fileID: 11400000, guid: 794f4688020d55941b35e290477bf00d, type: 2}
