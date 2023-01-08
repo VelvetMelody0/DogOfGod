@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class Dialogue
+public class Dialogue // might need : MonoBehavior here?
 {
     public Sprite charPortrait;
     public string name;
