@@ -7,6 +7,8 @@ public class DialogueTrigger : MonoBehaviour
     public Dialogue dialogue;
     public bool startDialogueOnEnter;
 
+
+
     private void Start()
     {
         startDialogueOnEnter = dialogue.startDialogueOnTriggerEnter;

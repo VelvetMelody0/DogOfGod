@@ -12,7 +12,8 @@ using UnityEngine.UI;
 //{
     public class DialogueManager : MonoBehaviour
     {
-        /* Dialogue Scriptable Objects */
+    #region Switch To Dialogue Trigger?
+    /* Dialogue Scriptable Objects */
 
         [SerializeField] private DialogueSystemDialogueContainerSO dialogueContainer;
         [SerializeField] private DialogueSystemDialogueGroupSO dialogueGroup;
@@ -22,8 +23,12 @@ using UnityEngine.UI;
         [SerializeField] private bool groupedDialogues;
         [SerializeField] private bool startingDialoguesOnly;
 
-        //textmeshprougui is just text but fancy
-        public TextMeshProUGUI nameText;
+        /* Indexes */
+        [SerializeField] private int selectedDialogueGroupIndex;
+        [SerializeField] private int selectedDialogueIndex;
+    #endregion
+    //textmeshprougui is just text but fancy
+    public TextMeshProUGUI nameText;
         public TextMeshProUGUI dialogueText;
 
         public Image charPortraitHolder;

@@ -6,10 +6,9 @@ using UnityEngine.UIElements;
 namespace DialogueSystem.Elements
 {
     using DialogueSystem.Data.Save;
-    using DialogueSystem.Utilties;
+    using DialogueSystem.Utilities;
     using DialogueSystem.Windows;
     using Enumerations;
-    using Utilities;
 
     public class DialogueSystemMultipleChoiceNode : DialogueSystemNode
     {

@@ -5,9 +5,8 @@ using System;
 
 namespace DialogueSystem.Windows
 {
-    using DialogueSystem.Utilties;
+    using DialogueSystem.Utilities;
     using System.IO;
-    using Utilities;
 
     public class DialogueSystemEditorWindow : EditorWindow
     {

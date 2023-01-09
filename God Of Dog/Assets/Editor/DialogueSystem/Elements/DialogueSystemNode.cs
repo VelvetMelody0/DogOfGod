@@ -8,11 +8,10 @@ using UnityEngine.UIElements;
 namespace DialogueSystem.Elements
 {
     using DialogueSystem.Data.Save;
-    using DialogueSystem.Utilties;
+    using DialogueSystem.Utilities;
     using DialogueSystem.Windows;
     using Enumerations;
     using System.Linq;
-    using Utilities;
 
 
     public class DialogueSystemNode: Node

@@ -36,10 +36,9 @@ public class PlayerController : MonoBehaviour
         //input goes here
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-        print(currentSpeed);
         if(Input.GetButtonDown("Interact"))
         {
-            if(inConversation == true)
+            if (inConversation == true)
             {
                 dialogueManager.DisplayNextSentence();
             }

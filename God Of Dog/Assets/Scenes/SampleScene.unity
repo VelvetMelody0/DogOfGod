@@ -1241,15 +1241,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     charPortrait: {fileID: 21300000, guid: 651de6b7c63ed3840b3bb88d829fc958, type: 3}
-    name: THEANGRY
-    audioClip: {fileID: 8300000, guid: 14d834da9e22cef4fb657252a7b4dbd5, type: 3}
-    audioDelay: 5
+    name: Just A Guy
+    audioClip: {fileID: 8300000, guid: 084913efbd2ee2047ae2a96b01560c2b, type: 3}
+    audioDelay: 4
     startDialogueOnTriggerEnter: 1
     sentences:
-    - EYYY I'M FRICKIN WALKING HERE
-    - EY, LEMME TELL YA, YOU'RE MAKING SOME GOOD PROGRESS ON THIS GMAE
-    - EVEN IF YOU CAN'T SPELL GAME RIGHT. YOU'RE DOING IT. YOU'RE MAKING SOME PROGRESS.
-      GOOD JOB. I'M PROUD OF YOU!!
+    - Testing Test test
+    - Blah, blah blha aslkdjflsd sidjfosdfjo.. SJLDKfjlskdfj klsdjflk
+    - Goodbye
   startDialogueOnEnter: 0
 --- !u!212 &612406395
 SpriteRenderer:
@@ -1759,16 +1758,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    charPortrait: {fileID: 21300000, guid: b03e130bfd63d334fa78a08af58a0fb4, type: 3}
-    name: Spaceson
-    audioClip: {fileID: 8300000, guid: 46822853ab2ecf44ca83d5f041f060b0, type: 3}
-    audioDelay: 3
+    charPortrait: {fileID: 0}
+    name: 
+    audioClip: {fileID: 0}
+    audioDelay: 4
     startDialogueOnTriggerEnter: 0
-    sentences:
-    - Ah, it's time to go on the ship.
-    - The ship to space. I have many friends onboard, and many tasks to complete.
-    - Nothing could go wrong!
-    - 'For them... :heh:'
+    sentences: []
   startDialogueOnEnter: 0
 --- !u!212 &705179375
 SpriteRenderer:
@@ -4343,6 +4338,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a882dae951af9c54f9db07acb3fcf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueContainer: {fileID: 0}
+  dialogueGroup: {fileID: 0}
+  dialogue: {fileID: 0}
+  groupedDialogues: 0
+  startingDialoguesOnly: 0
+  selectedDialogueGroupIndex: 0
+  selectedDialogueIndex: 0
   nameText: {fileID: 883572371}
   dialogueText: {fileID: 499840123}
   charPortraitHolder: {fileID: 754610777}
@@ -4515,18 +4517,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    charPortrait: {fileID: 21300000, guid: d4e9d3b291ab24f4899696122ca6ed88, type: 3}
-    name: King Dog
-    audioClip: {fileID: 8300000, guid: eb9dea61db55f4e4eadcead10e0a70ac, type: 3}
+    charPortrait: {fileID: 0}
+    name: 
+    audioClip: {fileID: 0}
     audioDelay: 4
     startDialogueOnTriggerEnter: 0
-    sentences:
-    - BARK BARK BARK BARK BARK!
-    - This is, a test, of the emergency... broadcast button. testing buttoning, button!!!
-    - Bork
-    - THIS SENTENCE IS SUPER DUPER LONG SO I HAVE LOTS OF TIME TO CLICK THROUGH IT
-      AND MAKE SURE IT WORKS!!!
-    - this one short
+    sentences: []
   startDialogueOnEnter: 0
 --- !u!114 &1529145932
 MonoBehaviour:
@@ -4879,19 +4875,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    charPortrait: {fileID: 21300000, guid: 2bb8fd5580f629547a8857d249831540, type: 3}
-    name: Mav
-    audioClip: {fileID: 8300000, guid: e6c135b18a2f5ff498db66d22c687044, type: 3}
+    charPortrait: {fileID: 0}
+    name: 
+    audioClip: {fileID: 0}
     audioDelay: 4
     startDialogueOnTriggerEnter: 0
-    sentences:
-    - Hrrrmmppph....
-    - The sea...
-    - The sea surely is...
-    - Salty...
-    - Salty as the sea it be...
-    - You know, I too be as salty as the sea... As the sea has assulted me...
-    - Hmmrrrrbbbrf
+    sentences: []
   startDialogueOnEnter: 0
 --- !u!61 &2049962360
 BoxCollider2D:

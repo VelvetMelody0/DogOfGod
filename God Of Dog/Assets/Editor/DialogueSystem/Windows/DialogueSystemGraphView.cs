@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace DialogueSystem.Windows
 {
-    using DialogueSystem.Utilties;
+    using DialogueSystem.Utilities;
     using Elements;
     using Enumerations;
     //using Utilities;
